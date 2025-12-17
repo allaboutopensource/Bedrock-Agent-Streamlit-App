@@ -20,7 +20,7 @@ def invoke_agent(agent_id: str, agent_alias_id: str, prompt: str, region: str, s
         session_id = str(uuid.uuid4())                          # Generate a new session ID if not provided and uuid.uuid4() will create a random unique identifier
 
     try:
-        response = client.invoke_agent(agentId=agent_id,agentAliasId=agent_alias_id,sessionId=session_id,inputText=prompt)
+        response = client.invoke_agent(agentId=agent_id,agentAliasId=agent_alias_id,sessionId=session_id,inputText=prompt,enableTrace=True)
         completion_text = ""
         for event in response.get("completion", []):
             if "chunk" in event and "bytes" in event["chunk"]:
