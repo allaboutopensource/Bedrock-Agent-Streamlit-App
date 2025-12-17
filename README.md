@@ -12,9 +12,11 @@ Note: we have created agent-chat as virtual enviroment in the Python and install
 
 streamlit service config :
 
+
 [Unit]
 Description=Streamlit App
 After=network.target
+
 
 [Service]
 User=ubuntu
@@ -24,6 +26,7 @@ Environment="PATH=/home/ubuntu/streamlit-app/agent-chat/bin"
 ExecStart=/home/ubuntu/streamlit-app/agent-chat/bin/streamlit run app.py --server.address 0.0.0.0 --server.port 8501
 Restart=always
 RestartSec=5
+
 
 [Install]
 WantedBy=multi-user.target
