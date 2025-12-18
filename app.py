@@ -10,11 +10,12 @@ AGENT_ID = "<your bedrock agent id>"
 AGENT_ALIAS_ID = "<your bedrock agent alias ID>"
 region = "us-east-1"
 
+if not AGENT_ID or not AGENT_ALIAS_ID:
+    raise RuntimeError("Set BEDROCK_AGENT_ID and BEDROCK_AGENT_ALIAS_ID in your environment.")
 
-@st.cache_resource
 def get_client():
     # Uses your local AWS profile / credentials
-    client = boto3.client("bedrock-agent-runtime", region_name=region)
+    client = boto3.client("bedrock-agent-runtime", region_name=AWS_REGION)
     return client
 
 
@@ -55,16 +56,14 @@ st.title("🤖 ITOPS Agent Chat")
 if "session_id" not in st.session_state:
     st.session_state.session_id = None
 
-prompt = st.text_area("Enter your prompt:")
+#prompt = st.text_area("Enter your prompt:")
+prompt = st.chat_input("Type your message…")
 
-if st.button("Send"):
-    if prompt.strip():
-        with st.spinner("Agent is thinking..."):
-            reply, sid = invoke_agent(prompt, st.session_state.session_id)
-            st.session_state.session_id = sid
+if prompt:
+    with st.spinner("Agent is thinking..."):
+        reply, sid = invoke_agent(prompt, st.session_state.session_id)
+        st.session_state.session_id = sid
 
-        if reply:
-            st.markdown("### Agent reply")
-            st.write(reply)
-    else:
-        st.warning("Please enter a prompt.")
+    if reply:
+        st.markdown("### Agent reply")
+        st.write(reply)
