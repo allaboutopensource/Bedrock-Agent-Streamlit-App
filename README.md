@@ -1,6 +1,20 @@
 # Bedrock-Agent-Streamlit-App
-A lightweight Streamlit-based UI for interacting with an Amazon Bedrock Agent that has an LLM model and guardrails attached. The app runs locally, uses AWS credentials/profiles, and supports multi-turn conversations via session management.
 
+📌 Project Summary: AI Conversational Assistant with Streamlit, Amazon Bedrock, and Jira
+
+Overview
+
+This project implements an IT Operations (ITOPS) conversational assistant that enables users to interact with Jira directly through a chat-based web interface. The solution uses a Streamlit application as the frontend, integrated with an Amazon Bedrock Agent that orchestrates actions through a Jira Action Group backed by an AWS Lambda function.
+
+The system allows users to:
+
+Query the status and details of existing Jira tickets (e.g., IIS-354)
+
+Create new Jira tickets through natural language prompts
+
+Interact in a ChatGPT-style conversational UI
+
+A lightweight Streamlit-based UI for interacting with an Amazon Bedrock Agent that has an LLM model and guardrails attached. The app runs locally, uses AWS credentials/profiles, and supports multi-turn conversations via session management.
 
 <img width="592" height="396" alt="image" src="https://github.com/user-attachments/assets/b6d185b6-7e45-43df-aaa5-524a9f43af2f" />
 
