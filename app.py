@@ -52,18 +52,25 @@ def invoke_agent(prompt: str, session_id: str | None = None):
 st.set_page_config(page_title="ITOPS Agent Chat", layout="centered")
 st.title("🤖 ITOPS Agent Chat")
 
-# Keep session id across Streamlit reruns
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 if "session_id" not in st.session_state:
-    st.session_state.session_id = None
+    st.session_state.session_id = str(uuid.uuid4())
 
-#prompt = st.text_area("Enter your prompt:")
-prompt = st.chat_input("Type your message…")
+for msg in st.session_state.messages:
+    with st.chat_message(msg["role"]):
+        st.markdown(msg["content"])  # markdown = ChatGPT look
+
+prompt = st.chat_input("Message ITOPS Agent...")
 
 if prompt:
-    with st.spinner("Agent is thinking..."):
-        reply, sid = invoke_agent(prompt, st.session_state.session_id)
-        st.session_state.session_id = sid
+    st.session_state.messages.append({"role": "user", "content": prompt})
 
-    if reply:
-        st.markdown("### Agent reply")
-        st.write(reply)
+    with st.spinner("Thinking..."):
+        try:
+            result = invoke_agent(prompt, st.session_state.session_id)
+            reply = result[0] if isinstance(result, tuple) else result
+        except Exception as e:
+            reply = f"❌ Error: {e}"
+    st.session_state.messages.append({"role": "assistant", "content": reply})
+    st.rerun()
