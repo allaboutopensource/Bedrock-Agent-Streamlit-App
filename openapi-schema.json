@@ -1,0 +1,86 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Jira Ticket Creator",
+    "version": "1.0.0",
+    "description": "Action group to create Jira issues (tickets)."
+  },
+  "paths": {
+    "/create": {
+      "post": {
+        "operationId": "createJiraTicket",
+        "description": "Action group to create Jira task (tickets).",
+        "summary": "Create a Jira ticket",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["projectKey", "summary", "description"],
+                "properties": {
+                  "projectKey": { "type": "string", "example": "IT" },
+                  "summary": { "type": "string", "example": "Nagios alert: Elasticsearch cluster yellow" },
+                  "description": { "type": "string", "example": "Observed degraded cluster health. Please investigate shard allocation." },
+                  "issueType": { "type": "string", "default": "Task", "example": "Incident" },
+                  "priority": { "type": "string", "example": "High" },
+                  "labels": { "type": "array", "items": { "type": "string" }, "example": ["nagios", "monitoring"] },
+                  "components": { "type": "array", "items": { "type": "string" }, "example": ["Observability"] },
+                  "assigneeEmail": { "type": "string", "example": "user@company.com" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "key": { "type": "string", "example": "IT-1234" },
+                    "id": { "type": "string" },
+                    "self": { "type": "string" },
+                    "browseUrl": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad request" },
+          "401": { "description": "Unauthorized" },
+          "500": { "description": "Server error" }
+        }
+      }
+    }
+  ,
+    "/ticket/{issueKey}": {
+      "get": {
+        "operationId": "getJiraTicket",
+        "summary": "Fetch Jira ticket information",
+        "description": "Retrieve details of a Jira ticket by its issue key.",
+        "parameters": [
+          {
+            "name": "issueKey",
+            "description": "The key of the Jira issue to retrieve",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "devops-123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket details",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          },
+          "404": { "description": "Not found" },
+          "401": { "description": "Unauthorized" },
+          "403": { "description": "Forbidden" }
+        }
+      }
+    }
+  }
+}
