@@ -19,6 +19,17 @@ A lightweight Streamlit-based UI for interacting with an Amazon Bedrock Agent th
 <img width="592" height="396" alt="image" src="https://github.com/user-attachments/assets/b6d185b6-7e45-43df-aaa5-524a9f43af2f" />
 
 
+Technologies Used
+
+Frontend: Streamlit (Python)
+
+AI Orchestration: Amazon Bedrock Agents
+
+Backend: AWS Lambda (Python)
+
+Integration: Jira Cloud REST API
+
+Infrastructure: AWS IAM, Bedrock Agent Runtime
 
 Note: Configure AWS credentials for the streamlit user, in this case the user is ubuntu 
 
